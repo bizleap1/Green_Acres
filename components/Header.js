@@ -38,19 +38,25 @@ export default function Header() {
           </div>
           <Link
             href="/"
-            className="font-bold text-xl text-green-700 hover:text-green-800 transition"
+            className={`font-minimal text-xl transition ${
+              scrolled ? "text-green-700 hover:text-green-800" : "text-white"
+            }`}
           >
             Green Acres Realty
           </Link>
         </div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center space-x-6 font-semibold text-green-800">
+        <nav className={`hidden md:flex items-center space-x-6 font-minimal transition`}>
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="px-4 py-2 rounded-lg hover:bg-green-100 transition"
+              className={`px-4 py-2 rounded-lg transition ${
+                scrolled
+                  ? "text-green-800 hover:bg-green-100"
+                  : "text-white hover:text-green-200"
+              }`}
             >
               {link.name}
             </Link>
@@ -61,7 +67,9 @@ export default function Header() {
         <div className="md:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="text-green-800 focus:outline-none"
+            className={`focus:outline-none transition ${
+              scrolled ? "text-green-800" : "text-white"
+            }`}
           >
             {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
@@ -70,14 +78,20 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <nav className="md:hidden bg-green-50 shadow-lg">
-          <ul className="flex flex-col space-y-2 px-6 py-4 text-green-800 font-semibold">
+        <nav
+          className={`md:hidden shadow-lg transition ${
+            scrolled ? "bg-green-50" : "bg-black bg-opacity-70"
+          }`}
+        >
+          <ul className={`flex flex-col space-y-2 px-6 py-4 font-minimal`}>
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="block px-4 py-2 rounded-lg hover:bg-green-100 transition"
+                  className={`block px-4 py-2 rounded-lg transition ${
+                    scrolled ? "text-green-800 hover:bg-green-100" : "text-white hover:text-green-200"
+                  }`}
                 >
                   {link.name}
                 </Link>

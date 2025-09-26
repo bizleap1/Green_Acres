@@ -13,23 +13,38 @@ export default function Home() {
       <Header />
 
       <main className="flex-1 w-full">
-        {/* Hero Section */}
-        <section className="relative bg-green-100 min-h-screen flex flex-col justify-center items-center text-center px-6">
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-green-700">
-            Welcome to GREENACRES Realty
-          </h1>
-          <p className="text-lg md:text-xl mb-6 max-w-xl">
-            Helping you find the perfect property — residential, commercial, and investment listings with trusted service.
-          </p>
-          <div className="flex gap-4">
-            <a href="/about" className="px-6 py-3 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700 transition">
-              About Us
-            </a>
-            <a href="/contact" className="px-6 py-3 border border-green-600 text-green-600 rounded-md font-semibold hover:bg-green-50 transition">
-              Contact
-            </a>
-          </div>
-        </section>
+        {/* Hero Section with slight blur */}
+<section
+  className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 bg-cover bg-center"
+  style={{ backgroundImage: "url('/images/hero.jpg')" }}
+>
+  {/* Slight blur overlay */}
+  <div className="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+
+  {/* Content */}
+  <div className="relative max-w-3xl z-10">
+    <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-white">
+      Welcome to GREENACRES Realty
+    </h1>
+    <p className="text-lg md:text-xl mb-6 text-white">
+      Helping you find the perfect property — residential, commercial, and investment listings with trusted service.
+    </p>
+    <div className="flex gap-4 justify-center">
+      <a
+        href="/about"
+        className="px-6 py-3 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700 transition"
+      >
+        About Us
+      </a>
+      <a
+        href="/contact"
+        className="px-6 py-3 border border-green-600 text-white rounded-md font-semibold hover:bg-green-700 transition"
+      >
+        Contact
+      </a>
+    </div>
+  </div>
+</section>
 
         {/* Properties Section */}
         <section className="container mx-auto px-6 py-20">
@@ -37,9 +52,11 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="bg-white shadow-lg rounded-lg overflow-hidden">
-                <div className="h-48 bg-gray-200 flex items-center justify-center text-gray-400 text-xl">
-                  Image {i + 1}
-                </div>
+                <img
+                  src={`/images/property${i + 1}.jpg`} // replace with your property images
+                  alt={`Property ${i + 1}`}
+                  className="h-48 w-full object-cover"
+                />
                 <div className="p-4">
                   <h3 className="font-semibold text-lg mb-2">Property {i + 1}</h3>
                   <p className="text-gray-600">Beautiful property in prime location with all amenities.</p>
@@ -86,7 +103,10 @@ export default function Home() {
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-4xl font-bold mb-8 text-green-700">Get in Touch</h2>
             <p className="text-lg mb-6">Have questions or want to find your perfect property? Reach out to us!</p>
-            <a href="/contact" className="px-6 py-3 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700 transition">
+            <a
+              href="/contact"
+              className="px-6 py-3 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700 transition"
+            >
               Contact Us
             </a>
           </div>
