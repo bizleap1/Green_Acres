@@ -1,0 +1,1 @@
+Place any images (logo, property photos) here. Example: public/logo.png
