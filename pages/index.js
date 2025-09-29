@@ -1,114 +1,130 @@
 import Head from "next/head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import properties from "../data/properties.json";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function Home() {
+  const featured = properties.slice(0, 4); // ✅ Only 4 cards
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gray-50">
       <Head>
-        <title>Green Acres Realty</title>
-        <meta name="description" content="Green Acres Realty - Find your home" />
+        <title>Green Acres Realty | Premium Properties</title>
+        <meta
+          name="description"
+          content="Premium properties with Green Acres Realty"
+        />
       </Head>
 
       <Header />
 
-      <main className="flex-1 w-full">
-        {/* Hero Section with slight blur */}
-<section
-  className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 bg-cover bg-center"
-  style={{ backgroundImage: "url('/images/hero.jpg')" }}
->
-  {/* Slight blur overlay */}
-  <div className="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
-
-  {/* Content */}
-  <div className="relative max-w-3xl z-10">
-    <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-white">
-      Welcome to GREENACRES Realty
-    </h1>
-    <p className="text-lg md:text-xl mb-6 text-white">
-      Helping you find the perfect property — residential, commercial, and investment listings with trusted service.
-    </p>
-    <div className="flex gap-4 justify-center">
-      <a
-        href="/about"
-        className="px-6 py-3 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700 transition"
-      >
-        About Us
-      </a>
-      <a
-        href="/contact"
-        className="px-6 py-3 border border-green-600 text-white rounded-md font-semibold hover:bg-green-700 transition"
-      >
-        Contact
-      </a>
-    </div>
-  </div>
-</section>
-
-        {/* Properties Section */}
-        <section className="container mx-auto px-6 py-20">
-          <h2 className="text-4xl font-bold mb-12 text-green-700">Our Featured Properties</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="bg-white shadow-lg rounded-lg overflow-hidden">
-                <img
-                  src={`/images/property${i + 1}.jpg`} // replace with your property images
-                  alt={`Property ${i + 1}`}
-                  className="h-48 w-full object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="font-semibold text-lg mb-2">Property {i + 1}</h3>
-                  <p className="text-gray-600">Beautiful property in prime location with all amenities.</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Services Section */}
-        <section className="bg-green-50 py-20">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="text-4xl font-bold mb-12 text-green-700">Our Services</h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-                <h3 className="font-semibold text-lg mb-2">Buying</h3>
-                <p className="text-gray-600">We help you buy the perfect property easily and securely.</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-                <h3 className="font-semibold text-lg mb-2">Selling</h3>
-                <p className="text-gray-600">List your property with us to reach thousands of potential buyers.</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-                <h3 className="font-semibold text-lg mb-2">Investments</h3>
-                <p className="text-gray-600">We guide you to invest in properties with high returns.</p>
-              </div>
+      <main className="flex-1">
+        {/* HERO */}
+        <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
+          <img
+            src="/images/hero.jpg"
+            alt="Luxury Homes"
+            className="absolute inset-0 w-full h-full object-cover scale-105"
+          />
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="relative z-10 text-center text-white px-6">
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-4xl md:text-6xl font-extrabold leading-tight mb-4"
+            >
+              Discover Your <span className="text-green-400">Dream Home</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto"
+            >
+              Explore handpicked premium properties with trust and expertise
+            </motion.p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/properties"
+                className="px-6 py-3 md:px-8 md:py-4 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition transform hover:scale-105 shadow-lg"
+              >
+                Explore Properties
+              </Link>
+              <Link
+                href="/contact"
+                className="px-6 py-3 md:px-8 md:py-4 border border-white text-white font-semibold rounded-lg hover:bg-white hover:text-gray-800 transition"
+              >
+                Get In Touch
+              </Link>
             </div>
           </div>
         </section>
 
-        {/* About Section */}
-        <section className="container mx-auto px-6 py-20">
-          <h2 className="text-4xl font-bold mb-12 text-green-700">About GREENACRES Realty</h2>
-          <p className="text-gray-700 text-lg max-w-3xl mx-auto mb-6">
-            GREENACRES Realty has been providing trusted real estate services for over 10 years. Our mission is to help clients find their dream homes and investment properties with ease and confidence. Our team of experienced agents is dedicated to guiding you through every step of the property journey.
-          </p>
-          <p className="text-gray-700 text-lg max-w-3xl mx-auto">
-            Whether you are buying, selling, or investing, we ensure a smooth, transparent, and rewarding experience. Your dream property is just a click away.
-          </p>
-        </section>
+        {/* FEATURED PROPERTIES */}
+        <section className="py-16 bg-white">
+          <div className="text-center mb-12 px-6">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4">
+              Featured <span className="text-green-500">Properties</span>
+            </h2>
+            <p className="text-gray-600 text-lg max-w-xl mx-auto">
+              A selection of properties that blend elegance, comfort, and luxury.
+            </p>
+          </div>
 
-        {/* Contact Section */}
-        <section className="bg-green-100 py-20">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="text-4xl font-bold mb-8 text-green-700">Get in Touch</h2>
-            <p className="text-lg mb-6">Have questions or want to find your perfect property? Reach out to us!</p>
-            <a
-              href="/contact"
-              className="px-6 py-3 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700 transition"
+          {/* ✅ Grid instead of scroll */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-6 max-w-7xl mx-auto">
+            {featured.map((property, i) => (
+              <motion.div
+                key={property.id}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-2xl shadow-md hover:shadow-xl overflow-hidden group"
+              >
+                <div className="relative">
+                  <img
+                    src={property.images[0]}
+                    alt={property.name}
+                    className="w-full h-52 object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <span className="absolute top-3 left-3 bg-green-500 text-white px-3 py-1 text-xs rounded-full">
+                    {property.status}
+                  </span>
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-bold truncate">{property.name}</h3>
+                  <p className="text-sm text-gray-500 mb-2">{property.location}</p>
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-green-600 font-bold text-xl">
+                      {property.price}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      {property.sqft} sqft • {property.bhk}
+                    </span>
+                  </div>
+                  <Link
+                    href={`/propertyview?id=${property.id}`}
+                    className="block bg-green-500 text-white py-2 rounded-lg text-center font-semibold hover:bg-green-600 transition"
+                  >
+                    View Details
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* View More */}
+          <div className="flex justify-center mt-10">
+            <Link
+              href="/properties"
+              className="px-8 py-3 bg-gray-800 text-white rounded-lg font-semibold hover:bg-green-600 transition shadow-md"
             >
-              Contact Us
-            </a>
+              View More Properties
+            </Link>
           </div>
         </section>
       </main>

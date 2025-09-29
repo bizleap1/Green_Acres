@@ -5,7 +5,6 @@ export default function Footer() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-    { name: "Services", href: "/services" },
     { name: "Properties", href: "/properties" },
     { name: "Contact", href: "/contact" },
   ];
@@ -47,8 +46,8 @@ export default function Footer() {
         {/* Contact Info */}
         <div>
           <h3 className="text-xl font-semibold mb-2 text-green-700">Contact Us</h3>
-          <p className="text-green-800 text-sm">123 Green Street, Your City</p>
-          <p className="text-green-800 text-sm">Phone: +91 123 456 7890</p>
+          <p className="text-green-800 text-sm">Mumbai</p>
+          <p className="text-green-800 text-sm">Phone: +91 97691 09898</p>
           <p className="text-green-800 text-sm">Email: info@greenacres.com</p>
         </div>
       </div>

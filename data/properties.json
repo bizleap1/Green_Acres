@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Green Acres Villa",
+    "sqft": "2500",
+    "price": "₹1.5 Cr",
+    "location": "Pune, Maharashtra",
+    "type": "Villa",
+    "bhk": "3BHK",
+    "status": "For Sale",
+    "images": ["/images/A1.png", "/images/A2.png", "/images/A3.png"],
+    "description": "A spacious villa with garden, parking and modern interiors."
+  },
+  {
+    "id": 2,
+    "name": "Skyline Apartment",
+    "sqft": "1200",
+    "price": "₹80 Lakh",
+    "location": "Nagpur, Maharashtra",
+    "type": "Apartment",
+    "bhk": "2BHK",
+    "status": "For Sale",
+    "images": ["/images/B1.png", "/images/property2b.jpg"],
+    "description": "Luxury 2BHK apartment in a premium society with pool and clubhouse."
+  },
+  {
+    "id": 3,
+    "name": "Countryside Farmhouse",
+    "sqft": "5000",
+    "price": "₹2 Cr",
+    "location": "Nashik, Maharashtra",
+    "type": "Farmhouse",
+    "bhk": "NA",
+    "status": "For Sale",
+    "images": ["/images/A1.png", "/images/property3b.jpg"],
+    "description": "Beautiful farmhouse surrounded by vineyards, perfect weekend getaway."
+  },
+  {
+    "id": 4,
+    "name": "Green Acres Villa",
+    "sqft": "2500",
+    "price": "₹1.5 Cr",
+    "location": "Pune, Maharashtra",
+    "type": "Villa",
+    "bhk": "3BHK",
+    "status": "For Sale",
+    "images": ["/images/B1.png", "/images/property1b.jpg", "/images/property1c.jpg"],
+    "description": "A spacious villa with garden, parking and modern interiors."
+  },
+  {
+    "id": 5,
+    "name": "Skyline Apartment",
+    "sqft": "1200",
+    "price": "₹80 Lakh",
+    "location": "Nagpur, Maharashtra",
+    "type": "Apartment",
+    "bhk": "2BHK",
+    "status": "For Sale",
+    "images": ["/images/A1.png", "/images/property2b.jpg"],
+    "description": "Luxury 2BHK apartment in a premium society with pool and clubhouse."
+  },
+  {
+    "id": 6,
+    "name": "Countryside Farmhouse",
+    "sqft": "5000",
+    "price": "₹2 Cr",
+    "location": "Nashik, Maharashtra",
+    "type": "Farmhouse",
+    "bhk": "NA",
+    "status": "For Sale",
+    "images": ["/images/B1.png", "/images/property3b.jpg"],
+    "description": "Beautiful farmhouse surrounded by vineyards, perfect weekend getaway."
+  },
+  {
+    "id": 7,
+    "name": "Green Acres Villa",
+    "sqft": "2500",
+    "price": "₹1.5 Cr",
+    "location": "Pune, Maharashtra",
+    "type": "Villa",
+    "bhk": "3BHK",
+    "status": "For Sale",
+    "images": ["/images/property1a.jpg", "/images/property1b.jpg", "/images/property1c.jpg"],
+    "description": "A spacious villa with garden, parking and modern interiors."
+  },
+  {
+    "id": 8,
+    "name": "Skyline Apartment",
+    "sqft": "1200",
+    "price": "₹80 Lakh",
+    "location": "Nagpur, Maharashtra",
+    "type": "Apartment",
+    "bhk": "2BHK",
+    "status": "For Sale",
+    "images": ["/images/property2a.jpg", "/images/property2b.jpg"],
+    "description": "Luxury 2BHK apartment in a premium society with pool and clubhouse."
+  },
+  {
+    "id": 9,
+    "name": "Countryside Farmhouse",
+    "sqft": "5000",
+    "price": "₹2 Cr",
+    "location": "Nashik, Maharashtra",
+    "type": "Farmhouse",
+    "bhk": "NA",
+    "status": "For Sale",
+    "images": ["/images/property3a.jpg", "/images/property3b.jpg"],
+    "description": "Beautiful farmhouse surrounded by vineyards, perfect weekend getaway."
+  }
+]
