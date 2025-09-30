@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { FaWhatsapp, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaPaperPlane } from 'react-icons/fa';
+import { FaWhatsapp, FaPhone, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -24,7 +24,7 @@ export default function Contact() {
   const sendToWhatsApp = (e) => {
     e.preventDefault();
     
-    const phoneNumber = '919769109898'; // Remove any spaces or special characters
+    const phoneNumber = '919769109898';
     const message = `*New Contact Request from Green Acres Realty Website*
 
 *Name:* ${formData.name}
@@ -45,42 +45,70 @@ ${formData.message}
 
   const contactInfo = [
     {
-      icon: <FaWhatsapp className="text-2xl text-green-500" />,
+      icon: <FaWhatsapp className="text-2xl" />,
       title: "WhatsApp",
       detail: "+91 97691 09898",
-      description: "Fastest response",
+      description: "",
       link: "https://wa.me/919769109898"
     },
     {
-      icon: <FaPhone className="text-2xl text-blue-500" />,
+      icon: <FaPhone className="text-2xl" />,
       title: "Call Us",
       detail: "+91 97691 09898",
-      description: "Mon-Sun, 9AM-8PM",
+      description: "",
       link: "tel:+919769109898"
     },
     {
-      icon: <FaEnvelope className="text-2xl text-red-400" />,
+      icon: <FaEnvelope className="text-2xl" />,
       title: "Email",
       detail: "hello@greenacres.com",
-      description: "We'll reply within 24h",
+      description: "",
       link: "mailto:hello@greenacres.com"
     },
     {
-      icon: <FaMapMarkerAlt className="text-2xl text-orange-500" />,
+      icon: <FaMapMarkerAlt className="text-2xl" />,
       title: "Office",
       detail: "Mumbai, India",
-      description: "Visit by appointment",
+      description: "",
       link: "#"
     }
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col">
       <Header />
+
+      <style jsx global>{`
+        :root{
+          --brand-white: #ffffff;
+          --brand-cream: #fffbe5;
+          --brand-peach: #D4A89C;
+          --brand-green: #173319;
+          --brand-green-900: #0a1a0c;
+          --brand-ink: #051106;
+        }
+
+        .text-green-100 { color: var(--brand-cream) !important; }
+        .text-green-500 { color: var(--brand-peach) !important; }
+        .text-green-600 { color: var(--brand-green) !important; }
+        .text-green-700 { color: var(--brand-green-900) !important; }
+
+        .bg-green-50 { background-color: var(--brand-cream) !important; }
+        .bg-green-500 { background-color: var(--brand-green) !important; }
+        .bg-green-600 { background-color: var(--brand-green) !important; }
+
+        .from-green-600 { --tw-gradient-from: var(--brand-green) !important; }
+        .to-emerald-700 { --tw-gradient-to: var(--brand-green-900) !important; }
+        .from-green-500 { --tw-gradient-from: var(--brand-green) !important; }
+        .to-emerald-600 { --tw-gradient-to: var(--brand-green-900) !important; }
+      `}</style>
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-green-600 to-emerald-700 text-white py-16">
+        <section 
+          className="bg-gradient-to-r from-green-600 to-emerald-700 text-white py-16"
+          style={{ background: "linear-gradient(135deg, #173319 0%, #0a1a0c 100%)" }}
+        >
           <div className="container mx-auto px-6 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h1>
             <p className="text-xl text-green-100 max-w-2xl mx-auto">
@@ -90,13 +118,13 @@ ${formData.message}
         </section>
 
         {/* Contact Section */}
-        <section className="py-16">
+        <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-6">
             <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
               {/* Contact Form */}
-              <div className="bg-white rounded-2xl shadow-lg p-8">
+              <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600">
+                  <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center text-green-600">
                     <FaPaperPlane className="text-xl" />
                   </div>
                   <div>
@@ -117,7 +145,7 @@ ${formData.message}
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all"
                         placeholder="Enter your full name"
                       />
                     </div>
@@ -131,7 +159,7 @@ ${formData.message}
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all"
                         placeholder="your@email.com"
                       />
                     </div>
@@ -147,7 +175,7 @@ ${formData.message}
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all"
                         placeholder="+91 00000 00000"
                       />
                     </div>
@@ -159,7 +187,7 @@ ${formData.message}
                         name="propertyType"
                         value={formData.propertyType}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all"
                       >
                         <option value="">Select property type</option>
                         <option value="Residential">Residential</option>
@@ -181,7 +209,7 @@ ${formData.message}
                       onChange={handleChange}
                       required
                       rows="5"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all"
                       placeholder="Tell us about your requirements, budget, preferred location, etc."
                     />
                   </div>
@@ -208,8 +236,6 @@ ${formData.message}
                     Whether you're buying, selling, or investing, our team is ready to provide 
                     personalized guidance and expert advice for your real estate journey.
                   </p>
-                  
-                 
                 </div>
 
                 {/* Contact Methods */}
@@ -223,7 +249,7 @@ ${formData.message}
                       className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-green-200 group"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="flex-shrink-0">
+                        <div className="flex-shrink-0 w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center text-green-600">
                           {item.icon}
                         </div>
                         <div className="flex-1">
@@ -239,7 +265,10 @@ ${formData.message}
                 </div>
 
                 {/* Quick Action Buttons */}
-                <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl p-8 text-white">
+                <div 
+                  className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl p-8 text-white"
+                  style={{ background: "linear-gradient(135deg, #173319, #0a1a0c)" }}
+                >
                   <h3 className="text-xl font-bold mb-3">Quick Connect</h3>
                   <p className="mb-4 text-green-100">Prefer instant communication?</p>
                   <a
@@ -256,8 +285,6 @@ ${formData.message}
             </div>
           </div>
         </section>
-
-        
       </main>
 
       <Footer />

@@ -10,31 +10,31 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-green-50 text-green-800 mt-16">
+    <footer className="bg-white text-[#173319]">
       <div className="container mx-auto px-6 py-12 grid md:grid-cols-3 gap-8">
         {/* Company Info */}
-        <div className="space-y-2">
-          <h2 className="text-2xl font-bold text-green-700">Green Acres Realty</h2>
-          <p className="text-green-800 text-sm">
+        <div className="space-y-3">
+          <h2 className="text-2xl font-bold text-[#173319]">Green Acres Realty</h2>
+          <p className="text-gray-700 text-sm">
             Helping you find the perfect property — residential, commercial, and investment listings with trusted service.
           </p>
-          <div className="flex space-x-3 mt-2 text-green-700">
-            <a href="#" className="hover:text-green-900 transition"><FaFacebookF /></a>
-            <a href="#" className="hover:text-green-900 transition"><FaInstagram /></a>
-            <a href="#" className="hover:text-green-900 transition"><FaTwitter /></a>
-            <a href="#" className="hover:text-green-900 transition"><FaLinkedinIn /></a>
+          <div className="flex space-x-3 mt-2 text-[#D4A89C]">
+            <a href="#" className="hover:text-[#173319] transition"><FaFacebookF /></a>
+            <a href="#" className="hover:text-[#173319] transition"><FaInstagram /></a>
+            <a href="#" className="hover:text-[#173319] transition"><FaTwitter /></a>
+            <a href="#" className="hover:text-[#173319] transition"><FaLinkedinIn /></a>
           </div>
         </div>
 
         {/* Quick Links */}
         <div>
-          <h3 className="text-xl font-semibold mb-2 text-green-700">Quick Links</h3>
+          <h3 className="text-xl font-semibold mb-2 text-[#173319]">Quick Links</h3>
           <ul className="space-y-1">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="hover:text-green-900 transition font-medium"
+                  className="hover:text-[#D4A89C] transition font-medium"
                 >
                   {link.name}
                 </Link>
@@ -45,15 +45,15 @@ export default function Footer() {
 
         {/* Contact Info */}
         <div>
-          <h3 className="text-xl font-semibold mb-2 text-green-700">Contact Us</h3>
-          <p className="text-green-800 text-sm">Mumbai</p>
-          <p className="text-green-800 text-sm">Phone: +91 97691 09898</p>
-          <p className="text-green-800 text-sm">Email: info@greenacres.com</p>
+          <h3 className="text-xl font-semibold mb-2 text-[#173319]">Contact Us</h3>
+          <p className="text-gray-700 text-sm">Mumbai</p>
+          <p className="text-gray-700 text-sm">Phone: +91 97691 09898</p>
+          <p className="text-gray-700 text-sm">Email: info@greenacres.com</p>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-green-200 py-4 text-center text-sm text-green-700">
+      <div className="border-t border-gray-200 py-4 text-center text-sm text-gray-600">
         © {new Date().getFullYear()} Green Acres Realty — All rights reserved.
       </div>
     </footer>

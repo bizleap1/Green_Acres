@@ -1,12 +1,22 @@
+"use client";
+
 import Head from "next/head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import properties from "../data/properties.json";
 import Link from "next/link";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 export default function Properties() {
   const [filter, setFilter] = useState("all");
+  const [hoveredProperty, setHoveredProperty] = useState(null);
+
+  const { ref: propertiesRef, inView: propertiesInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
 
   // ✅ Apply filter
   const filteredProperties =
@@ -14,138 +24,360 @@ export default function Properties() {
       ? properties
       : properties.filter((p) => p.type?.toLowerCase() === filter);
 
+  const fadeInUp = {
+    initial: { opacity: 0, y: 60 },
+    animate: { opacity: 1, y: 0 },
+  };
+
+  const staggerChildren = {
+    animate: {
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const filterButtons = [
+    { key: "all", label: "All Properties" },
+    { key: "house", label: "Houses" },
+    { key: "apartment", label: "Apartments" },
+    { key: "villa", label: "Villas" },
+    { key: "commercial", label: "Commercial" },
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col">
       <Head>
-        <title>All Properties | Green Acres Realty</title>
+        <title>Properties - Green Acres Realty | Premium Real Estate Listings</title>
         <meta
           name="description"
-          content="Browse all available properties with Green Acres Realty"
+          content="Discover premium properties with Green Acres Realty. Browse houses, apartments, villas, and commercial spaces with 11+ years of trusted expertise."
+        />
+        {/* Fonts */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=DM+Serif+Display&display=swap"
+          rel="stylesheet"
         />
       </Head>
 
       <Header />
 
-      <main className="flex-1">
-        {/* HERO IMAGE HEADER */}
-        <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
-          <img
-            src="/images/hero.jpg" // 🔥 replace with your own image
-            alt="Properties"
-            className="absolute inset-0 w-full h-full object-cover scale-105"
-          />
-          <div className="absolute inset-0 bg-black/60" />
-          <div className="relative z-10 text-center text-white px-6">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Discover Your Perfect Property
-            </h1>
-            <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto">
-              Browse through our extensive collection of premium properties
-            </p>
+      {/* Global brand styles & Tailwind-class overrides */}
+      <style jsx global>{`
+        :root{
+          --brand-white: #ffffff;
+          --brand-cream: #fffbe5;
+          --brand-peach: #D4A89C;
+          --brand-green: #173319;
+          --brand-green-900: #0a1a0c;
+          --brand-ink: #051106;
+          --font-heading: 'Blink Twice', 'Montserrat', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+          --font-body: 'Montserrat', 'DM Serif Display', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        /* If you host Blink Twice locally, these will be used automatically */
+        @font-face {
+          font-family: 'Blink Twice';
+          src: url('/fonts/BlinkTwice-Regular.woff2') format('woff2');
+          font-weight: 400;
+          font-style: normal;
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'Blink Twice';
+          src: url('/fonts/BlinkTwice-Bold.woff2') format('woff2');
+          font-weight: 700;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        /* Typography */
+        html, body, #__next { font-family: var(--font-body); color: var(--brand-ink); }
+        h1,h2,h3, .font-bold { font-family: var(--font-heading); }
+
+        /* Brand color overrides for Tailwind green- classes used in this page */
+        .text-green-100 { color: var(--brand-cream) !important; }
+        .text-green-200 { color: var(--brand-cream) !important; }
+        .text-green-300 { color: var(--brand-cream) !important; }
+        .text-green-500 { color: var(--brand-peach) !important; }
+        .text-green-600 { color: var(--brand-green) !important; }
+        .text-green-700 { color: var(--brand-green-900) !important; }
+
+        .bg-green-50 { background-color: var(--brand-cream) !important; }
+        .bg-green-100 { background-color: rgba(23,51,25,0.06) !important; }
+        .bg-green-500 { background-color: var(--brand-green) !important; }
+        .bg-green-600 { background-color: var(--brand-green) !important; }
+
+        .border-green-200 { border-color: rgba(23,51,25,0.12) !important; }
+
+        /* Tailwind gradient variables used on elements in this file */
+        .from-green-600 { --tw-gradient-from: var(--brand-green) !important; }
+        .via-emerald-700 { --tw-gradient-stops: var(--brand-green), var(--brand-green-900) !important; }
+        .to-emerald-700 { --tw-gradient-to: var(--brand-green-900) !important; }
+        .from-green-50 { --tw-gradient-from: var(--brand-cream) !important; }
+        .to-emerald-100 { --tw-gradient-to: var(--brand-cream) !important; }
+        .from-green-700 { --tw-gradient-from: var(--brand-green) !important; }
+        .to-teal-800 { --tw-gradient-to: var(--brand-green-900) !important; }
+
+        /* Gray -> brand ink mapping */
+        .text-gray-900, .text-gray-800 { color: var(--brand-ink) !important; }
+        .text-gray-700, .text-gray-600, .text-gray-500 { color: rgba(5,17,6,0.75) !important; }
+
+        .text-white { color: var(--brand-white) !important; }
+        .bg-white { background-color: var(--brand-white) !important; }
+
+        /* Footer safe override */
+        .footer { background: var(--brand-ink) !important; color: var(--brand-white) !important; }
+
+        /* Links */
+        a { color: var(--brand-green) !important; }
+
+      `}</style>
+
+      <main className="flex-1 w-full overflow-hidden">
+        {/* Hero Section */}
+        <section
+          className="relative bg-gradient-to-br from-green-700 via-emerald-700 to-teal-800 min-h-[60vh] flex flex-col justify-center items-center text-center px-6 overflow-hidden"
+          style={{ background: "linear-gradient(135deg, #173319 0%, #0a1a0c 60%)" }}
+        >
+          {/* Animated Background Elements */}
+          <div className="absolute inset-0 overflow-hidden">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 0.1 }}
+              transition={{ duration: 2 }}
+              className="absolute -top-20 -right-20 w-80 h-80 bg-white rounded-full"
+            />
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 0.1 }}
+              transition={{ duration: 2, delay: 0.5 }}
+              className="absolute -bottom-20 -left-20 w-60 h-60 bg-white rounded-full"
+            />
           </div>
+
+          <div className="relative z-10 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="mb-6"
+            >
+              <span
+                className="bg-green-500/20 text-green-200 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm"
+                style={{ backgroundColor: "rgba(23,51,25,0.12)", color: "#fffbe5" }}
+              >
+                Premium Properties
+              </span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="text-5xl md:text-7xl font-bold mb-6 text-white leading-tight"
+            >
+              Discover Your
+              <br />
+              <span style={{ color: "#fffbe5" }}>Dream Property</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.4 }}
+              className="text-xl md:text-2xl text-green-100 max-w-3xl mx-auto mb-8 leading-relaxed"
+              style={{ color: "rgba(255,255,255,0.92)" }}
+            >
+              Curated selection of <span className="font-semibold text-white">premium homes</span> and 
+              <span className="font-semibold text-white"> investment opportunities</span> with 
+              <span className="text-green-300 font-semibold"> 11+ years of trusted expertise</span>
+            </motion.p>
+          </div>
+
+          {/* Scroll Indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1 }}
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          >
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-6 h-10 border-2 border-white rounded-full flex justify-center"
+            >
+              <motion.div
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-1 h-3 bg-white rounded-full mt-2"
+              />
+            </motion.div>
+          </motion.div>
         </section>
 
-        {/* FILTERS */}
-        <section className="py-8 bg-white shadow-sm">
+        {/* Filters Section */}
+        <section className="py-12 bg-white border-b border-gray-100 sticky top-0 z-40 backdrop-blur-sm bg-white/95">
           <div className="container mx-auto px-6">
-            <div className="flex flex-wrap gap-4 justify-center">
-              {["all", "house", "apartment", "villa"].map((type) => (
-                <button
-                  key={type}
-                  onClick={() => setFilter(type)}
-                  className={`px-6 py-3 rounded-full font-semibold transition-all ${
-                    filter === type
-                      ? "bg-green-500 text-white shadow-md"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-wrap gap-3 justify-center"
+            >
+              {filterButtons.map((button) => (
+                <motion.button
+                  key={button.key}
+                  onClick={() => setFilter(button.key)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 border ${
+                    filter === button.key
+                      ? "bg-green-600 text-white shadow-lg shadow-green-600/25 border-green-600"
+                      : "bg-white text-gray-700 border-gray-300 hover:border-green-600 hover:text-green-600 hover:bg-green-50/50"
                   }`}
                 >
-                  {type === "all"
-                    ? "All Properties"
-                    : type.charAt(0).toUpperCase() + type.slice(1) + "s"}
-                </button>
+                  {button.label}
+                </motion.button>
               ))}
-            </div>
+            </motion.div>
+
+            {/* Results Counter */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="text-center mt-6"
+            >
+              <p className="text-gray-600">
+                Showing <span className="font-bold text-green-600">{filteredProperties.length}</span>{" "}
+                {filteredProperties.length === 1 ? "property" : "properties"}
+                {filter !== "all" && (
+                  <span> in <span className="font-semibold text-gray-800">{filter}s</span></span>
+                )}
+              </p>
+            </motion.div>
           </div>
         </section>
 
-        {/* PROPERTIES GRID */}
-        <section className="py-16">
+        {/* Properties Grid */}
+        <section ref={propertiesRef} className="py-20 bg-gradient-to-b from-gray-50 to-white">
           <div className="container mx-auto px-6">
             {filteredProperties.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-                {filteredProperties.map((property) => (
-                  <div
+              <motion.div
+                initial="initial"
+                animate={propertiesInView ? "animate" : "initial"}
+                variants={staggerChildren}
+                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+              >
+                {filteredProperties.map((property, index) => (
+                  <motion.div
                     key={property.id}
-                    className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 group"
+                    variants={fadeInUp}
+                    initial="initial"
+                    animate={propertiesInView ? "animate" : "initial"}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                    onHoverStart={() => setHoveredProperty(property.id)}
+                    onHoverEnd={() => setHoveredProperty(null)}
+                    className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden relative"
                   >
-                    {/* Property Image */}
-                    <div className="relative overflow-hidden">
-                      <img
+                    {/* Property Image with Overlay */}
+                    <div className="relative overflow-hidden h-64">
+                      <motion.img
                         src={property.images[0]}
                         alt={property.name}
-                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="w-full h-full object-cover"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.6 }}
                       />
+                      
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      {/* Status Badge */}
                       <div className="absolute top-4 right-4">
-                        <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
                           {property.status || "Available"}
                         </span>
+                      </div>
+
+                      {/* Quick Info Overlay */}
+                      <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                        <div className="flex justify-between text-white">
+                          <div className="flex items-center space-x-4">
+                            <div className="flex items-center">
+                              <span className="text-sm font-semibold">{property.bedrooms || 3}</span>
+                              <span className="text-xs ml-1">BEDS</span>
+                            </div>
+                            <div className="flex items-center">
+                              <span className="text-sm font-semibold">{property.bathrooms || 2}</span>
+                              <span className="text-xs ml-1">BATHS</span>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-lg font-bold">{property.price}</div>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
                     {/* Property Details */}
                     <div className="p-6">
-                      <div className="flex justify-between items-start mb-3">
-                        <h3 className="text-xl font-bold text-gray-800 group-hover:text-green-600 transition-colors">
+                      <div className="mb-3">
+                        <h3 className="text-xl font-bold text-gray-800 group-hover:text-green-600 transition-colors duration-300 line-clamp-1">
                           {property.name}
                         </h3>
-                        <span className="text-2xl font-bold text-green-600">
-                          {property.price}
-                        </span>
+                        <div className="flex items-center text-gray-600 mt-2">
+                          <svg
+                            className="w-4 h-4 mr-2 flex-shrink-0"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          <span className="text-sm line-clamp-1">{property.location}</span>
+                        </div>
                       </div>
 
-                      <div className="flex items-center text-gray-600 mb-4">
-                        <svg
-                          className="w-5 h-5 mr-2"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        {property.location}
-                      </div>
+                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                        {property.description || "Beautiful property with modern amenities and prime location."}
+                      </p>
 
                       <div className="grid grid-cols-3 gap-4 py-4 border-y border-gray-200 mb-4">
                         <div className="text-center">
                           <div className="text-lg font-bold text-gray-800">
-                            {property.sqft.toLocaleString()}
+                            {property.sqft ? property.sqft.toLocaleString() : "2,500"}
                           </div>
-                          <div className="text-sm text-gray-600">SQ FT</div>
+                          <div className="text-xs text-gray-600 uppercase tracking-wide">SQ FT</div>
                         </div>
                         <div className="text-center">
                           <div className="text-lg font-bold text-gray-800">
                             {property.bedrooms || 3}
                           </div>
-                          <div className="text-sm text-gray-600">BEDS</div>
+                          <div className="text-xs text-gray-600 uppercase tracking-wide">BEDS</div>
                         </div>
                         <div className="text-center">
                           <div className="text-lg font-bold text-gray-800">
                             {property.bathrooms || 2}
                           </div>
-                          <div className="text-sm text-gray-600">BATHS</div>
+                          <div className="text-xs text-gray-600 uppercase tracking-wide">BATHS</div>
                         </div>
                       </div>
 
                       <Link
                         href={`/propertyview?id=${property.id}`}
-                        className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-300 flex items-center justify-center group"
+                        className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transform hover:scale-105 transition-all duration-300 flex items-center justify-center group/btn shadow-lg hover:shadow-xl"
                       >
                         View Full Details
                         <svg
-                          className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform"
+                          className="w-5 h-5 ml-2 transform group-hover/btn:translate-x-1 transition-transform"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -159,16 +391,38 @@ export default function Properties() {
                         </svg>
                       </Link>
                     </div>
-                  </div>
+
+                    {/* Hover Effect Border */}
+                    <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-green-600/20 transition-all duration-300 pointer-events-none" />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             ) : (
-              <p className="text-center text-gray-500 text-lg">
-                No properties available in this category.
-              </p>
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-center py-16"
+              >
+                <div className="text-6xl mb-4">🏡</div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">No Properties Found</h3>
+                <p className="text-gray-600 max-w-md mx-auto mb-6">
+                  We couldn't find any properties matching your current filter. Try adjusting your criteria or browse all properties.
+                </p>
+                <motion.button
+                  onClick={() => setFilter("all")}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors duration-300"
+                >
+                  View All Properties
+                </motion.button>
+              </motion.div>
             )}
           </div>
         </section>
+
+        
       </main>
 
       <Footer />

@@ -70,13 +70,95 @@ export default function About() {
           name="description"
           content="Discover Green Acres Realty's journey from OSR Realtors. Founded by Rishabh Tewani in 2014, we bring 11+ years of trusted real estate expertise."
         />
+        {/* Fonts */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=DM+Serif+Display&display=swap"
+          rel="stylesheet"
+        />
       </Head>
 
       <Header />
 
+      {/* Global brand styles & Tailwind-class overrides (only colors + fonts) */}
+      <style jsx global>{`
+        :root{
+          --brand-white: #ffffff;
+          --brand-cream: #fffbe5;
+          --brand-peach: #D4A89C;
+          --brand-green: #173319;
+          --brand-green-900: #0a1a0c;
+          --brand-ink: #051106;
+          --font-heading: 'Blink Twice', 'Montserrat', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+          --font-body: 'Montserrat', 'DM Serif Display', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        /* If you host Blink Twice locally, these will be used automatically */
+        @font-face {
+          font-family: 'Blink Twice';
+          src: url('/fonts/BlinkTwice-Regular.woff2') format('woff2');
+          font-weight: 400;
+          font-style: normal;
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'Blink Twice';
+          src: url('/fonts/BlinkTwice-Bold.woff2') format('woff2');
+          font-weight: 700;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        /* Typography */
+        html, body, #__next { font-family: var(--font-body); color: var(--brand-ink); }
+        h1,h2,h3, .font-bold { font-family: var(--font-heading); }
+
+        /* Brand color overrides for Tailwind green- classes used in this page */
+        .text-green-100 { color: var(--brand-cream) !important; }
+        .text-green-200 { color: var(--brand-cream) !important; }
+        .text-green-300 { color: var(--brand-cream) !important; }
+        .text-green-500 { color: var(--brand-peach) !important; }
+        .text-green-600 { color: var(--brand-green) !important; }
+        .text-green-700 { color: var(--brand-green-900) !important; }
+
+        .bg-green-50 { background-color: var(--brand-cream) !important; }
+        .bg-green-100 { background-color: rgba(23,51,25,0.06) !important; }
+        .bg-green-500 { background-color: var(--brand-green) !important; }
+        .bg-green-600 { background-color: var(--brand-green) !important; }
+
+        .border-green-200 { border-color: rgba(23,51,25,0.12) !important; }
+
+        /* Tailwind gradient variables used on elements in this file */
+        .from-green-600 { --tw-gradient-from: var(--brand-green) !important; }
+        .via-emerald-700 { --tw-gradient-stops: var(--brand-green), var(--brand-green-900) !important; }
+        .to-emerald-700 { --tw-gradient-to: var(--brand-green-900) !important; }
+        .from-green-50 { --tw-gradient-from: var(--brand-cream) !important; }
+        .to-emerald-100 { --tw-gradient-to: var(--brand-cream) !important; }
+        .from-green-700 { --tw-gradient-from: var(--brand-green) !important; }
+        .to-teal-800 { --tw-gradient-to: var(--brand-green-900) !important; }
+
+        /* Gray -> brand ink mapping */
+        .text-gray-900, .text-gray-800 { color: var(--brand-ink) !important; }
+        .text-gray-700, .text-gray-600, .text-gray-500 { color: rgba(5,17,6,0.75) !important; }
+
+        .text-white { color: var(--brand-white) !important; }
+        .bg-white { background-color: var(--brand-white) !important; }
+
+        /* Footer safe override */
+        .footer { background: var(--brand-ink) !important; color: var(--brand-white) !important; }
+
+        /* Links */
+        a { color: var(--brand-green) !important; }
+
+      `}</style>
+
       <main className="flex-1 w-full overflow-hidden">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-green-700 via-emerald-700 to-teal-800 min-h-[70vh] flex flex-col justify-center items-center text-center px-6 overflow-hidden">
+        <section
+          className="relative bg-gradient-to-br from-green-700 via-emerald-700 to-teal-800 min-h-[70vh] flex flex-col justify-center items-center text-center px-6 overflow-hidden"
+          style={{ background: "linear-gradient(135deg, #173319 0%, #0a1a0c 60%)" }}
+        >
           {/* Animated Background Elements */}
           <div className="absolute inset-0 overflow-hidden">
             <motion.div
@@ -100,7 +182,10 @@ export default function About() {
               transition={{ duration: 0.8 }}
               className="mb-6"
             >
-              <span className="bg-green-500/20 text-green-200 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm">
+              <span
+                className="bg-green-500/20 text-green-200 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm"
+                style={{ backgroundColor: "rgba(23,51,25,0.12)", color: "#fffbe5" }}
+              >
                 Trusted Since 2014
               </span>
             </motion.div>
@@ -113,7 +198,7 @@ export default function About() {
             >
               Building Dreams,
               <br />
-              <span className="text-green-300">One Property</span> at a Time
+              <span style={{ color: "#fffbe5" }}>One Property</span> at a Time
             </motion.h1>
 
             <motion.p
@@ -121,10 +206,11 @@ export default function About() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.4 }}
               className="text-xl md:text-2xl text-green-100 max-w-3xl mx-auto mb-8 leading-relaxed"
+              style={{ color: "rgba(255,255,255,0.92)" }}
             >
               From <span className="font-semibold text-white">OSR Realtors</span> to{" "}
               <span className="font-semibold text-white">Green Acres Realty</span> - 
-              Carrying forward a legacy of <span className="text-green-300">trust, innovation, and excellence</span>
+              Carrying forward a legacy of <span className="text-green-300 font-semibold">trust, innovation, and excellence</span>
             </motion.p>
 
           </div>
@@ -285,6 +371,7 @@ export default function About() {
                 animate={missionInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8 }}
                 className="bg-gradient-to-br from-green-600 to-emerald-700 rounded-2xl p-8 text-white shadow-xl"
+                style={{ background: "linear-gradient(135deg, #173319, #0a1a0c)" }}
               >
                 <div className="text-4xl mb-4">🌅</div>
                 <h3 className="text-3xl font-bold mb-6">Our Vision</h3>
