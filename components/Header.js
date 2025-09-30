@@ -16,9 +16,7 @@ export default function Header() {
   ];
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -35,30 +33,48 @@ export default function Header() {
         scrolled ? "bg-[#fffbe5] shadow-lg" : "bg-transparent"
       }`}
     >
-      {/* Desktop Nav */}
-      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+      {/* 🔥 Reduced py-2 instead of py-4 */}
+      <div className="container mx-auto px-6 py-2 flex items-center justify-between">
         {/* Logo + Name */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-[#173319] rounded-full flex items-center justify-center text-white font-bold">
-            GA
-          </div>
-          <Link
-            href="/"
-            className={`font-serif text-xl transition ${
-              scrolled ? "text-[#173319] hover:text-[#0a1a0c]" : "text-white"
-            }`}
-          >
-            Green Acres Realty
+        <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
+            <img
+              src="/images/logo.png"
+              alt="Green Acres Realty Logo"
+              className="w-10 h-10 object-contain" // 🔥 smaller logo
+            />
+            <div className="leading-tight">
+              <div
+                className="text-xl font-semibold tracking-[0.25em]" // 🔥 smaller text
+                style={{
+                  background: "linear-gradient(90deg, #d4af37, #cba135, #b8860b)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                GREENACRES
+              </div>
+              <div
+                className="text-[10px] tracking-[0.35em] mt-0.5" // 🔥 smaller subtext
+                style={{
+                  background: "linear-gradient(90deg, #d4af37, #cba135, #b8860b)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                REALTY
+              </div>
+            </div>
           </Link>
         </div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center space-x-6 font-sans transition">
+        <nav className="hidden md:flex items-center space-x-5 font-sans transition">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`px-4 py-2 rounded-lg transition ${
+              className={`px-3 py-1 rounded-lg transition ${
                 scrolled
                   ? "text-[#173319] hover:bg-[#D4A89C] hover:text-[#0a1a0c]"
                   : "text-white hover:text-[#D4A89C]"
@@ -73,13 +89,13 @@ export default function Header() {
         <div className="md:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`focus:outline-none transition p-2 rounded-lg ${
+            className={`focus:outline-none transition p-1.5 rounded-lg ${
               scrolled
                 ? "text-[#173319] hover:bg-[#D4A89C]"
                 : "text-white hover:bg-white hover:bg-opacity-20"
             }`}
           >
-            {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+            {mobileMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
           </button>
         </div>
       </div>
@@ -87,56 +103,72 @@ export default function Header() {
       {/* Mobile Menu Overlay */}
       <div
         className={`md:hidden fixed inset-0 z-40 transition-all duration-300 ${
-          mobileMenuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
+          mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        {/* Backdrop */}
         <div
           className="absolute inset-0 bg-black bg-opacity-50"
           onClick={() => setMobileMenuOpen(false)}
         />
 
-        {/* Menu Panel */}
         <div
-          className={`absolute top-0 right-0 h-full w-80 max-w-full bg-[#ffffff] shadow-xl transform transition-transform duration-300 ${
+          className={`absolute top-0 right-0 h-full w-72 max-w-full bg-white shadow-xl transform transition-transform duration-300 ${
             mobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           {/* Menu Header */}
-          <div className="bg-[#173319] p-6 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#0a1a0c] rounded-full flex items-center justify-center text-white font-bold text-lg">
-                GA
+          <div className="bg-[#173319] p-4 flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2">
+              <img
+                src="/images/logo.png"
+                alt="Green Acres Logo"
+                className="w-10 h-10 object-contain"
+              />
+              <div className="leading-tight">
+                <div
+                  className="text-base font-semibold tracking-[0.2em]"
+                  style={{
+                    background: "linear-gradient(90deg, #d4af37, #cba135, #b8860b)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                >
+                  GREENACRES
+                </div>
+                <div
+                  className="text-[10px] tracking-[0.3em] mt-0.5"
+                  style={{
+                    background: "linear-gradient(90deg, #d4af37, #cba135, #b8860b)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                >
+                  REALTY
+                </div>
               </div>
-              <div>
-                <div className="text-white font-bold text-lg">Green Acres</div>
-                <div className="text-[#D4A89C] text-sm">Realty</div>
-              </div>
-            </div>
+            </Link>
             <button
               onClick={() => setMobileMenuOpen(false)}
               className="text-white hover:text-[#D4A89C] transition-colors p-2"
             >
-              <FaTimes size={20} />
+              <FaTimes size={18} />
             </button>
           </div>
 
           {/* Menu Items */}
-          <nav className="p-6">
-            <div className="space-y-2">
+          <nav className="p-4">
+            <div className="space-y-1.5">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-4 p-4 rounded-xl text-[#173319] hover:bg-[#fffbe5] hover:text-[#0a1a0c] transition-all group"
+                  className="flex items-center gap-3 p-3 rounded-lg text-[#173319] hover:bg-[#fffbe5] hover:text-[#0a1a0c] transition-all group"
                 >
                   <div className="text-[#0a1a0c] group-hover:text-[#173319] transition-colors">
                     {link.icon}
                   </div>
-                  <span className="font-semibold text-lg">{link.name}</span>
+                  <span className="font-medium text-base">{link.name}</span>
                 </Link>
               ))}
             </div>
