@@ -266,7 +266,7 @@ export default function About() {
                   </p>
                   <p>
                     Today, as <span className="font-semibold text-green-700">Green Acres Realty</span>, co-founded by{" "}
-                    <span className="font-semibold text-gray-900">Kajal Kundani</span>, we continue this 
+                    <span className="font-semibold text-gray-900">Kkajal Kundnani</span>, we continue this 
                     legacy with innovation and modern partnership values.
                   </p>
                 </motion.div>
@@ -284,7 +284,7 @@ export default function About() {
                     {[
                       { year: "2014", event: "OSR Realtors Founded", desc: "Rishabh Tewani establishes the foundation" },
                       { year: "2014-2023", event: "Building Excellence", desc: "11+ years of trusted service" },
-                      { year: "Present", event: "Green Acres Realty", desc: "Modern partnership with Kajal Kundani" },
+                      { year: "Present", event: "Green Acres Realty", desc: "Modern partnership with Kkajal Kundnani" },
                     ].map((item, index) => (
                       <motion.div
                         key={index}
