@@ -441,7 +441,7 @@ export default function About() {
                 {
                   name: "Kkajal Kundnani",
                   role: "Co-Founder & Strategist",
-                  bio: "Bringing fresh perspective and strategic vision, Kajal ensures Green Acres Realty delivers innovative solutions while maintaining our core values.",
+                  bio: "Bringing fresh perspective and strategic vision, Kkajal ensures Green Acres Realty delivers innovative solutions while maintaining our core values.",
                   initials: "KK",
                   color: "from-blue-600 to-cyan-700",
                 },

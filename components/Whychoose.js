@@ -20,7 +20,7 @@ export default function WhyChooseGreenAcres() {
     },
     {
       title: "Innovation & Modern Values",
-      desc: "Today, as Green Acres Realty, co-founded by Kajal Kundani, we continue this legacy with innovation and modern partnership values.",
+      desc: "Today, as Green Acres Realty, co-founded by Kkajal Kundnani, we continue this legacy with innovation and modern partnership values.",
     },
   ];
 
