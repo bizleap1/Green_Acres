@@ -49,7 +49,7 @@ ${formData.message}
       title: "WhatsApp",
       detail: "+91 97673 12345",
       description: "",
-      link: "https://wa.me/919767312345"
+      link: "https://wa.me/919833398980"
     },
     {
       icon: <FaPhone className="text-2xl" />,
@@ -272,7 +272,7 @@ ${formData.message}
                   <h3 className="text-xl font-bold mb-3">Quick Connect</h3>
                   <p className="mb-4 text-green-100">Prefer instant communication?</p>
                   <a
-                    href="https://wa.me/919767312345"
+                    href="https://wa.me/919833398980"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-3 bg-white text-green-600 font-semibold py-3 px-6 rounded-lg hover:bg-green-50 transition-all duration-300"
