@@ -32,7 +32,7 @@ export default function PropertyView() {
   const handleSubmit = () => {
     if (!name || !mobile) return alert("Please fill all fields!");
     const message = `Hello! I want the price details for ${property?.name}. My name is ${name}, Mobile: ${mobile}`;
-    const whatsappURL = `https://wa.me/917097095152?text=${encodeURIComponent(
+    const whatsappURL = `https://wa.me/919767312345?text=${encodeURIComponent(
       message
     )}`;
     window.open(whatsappURL, "_blank");
