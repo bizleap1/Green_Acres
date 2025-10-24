@@ -24,7 +24,7 @@ export default function Contact() {
   const sendToWhatsApp = (e) => {
     e.preventDefault();
     
-    const phoneNumber = '919769109898';
+    const phoneNumber = '919767312345';
     const message = `*New Contact Request from Green Acres Realty Website*
 
 *Name:* ${formData.name}
@@ -47,23 +47,23 @@ ${formData.message}
     {
       icon: <FaWhatsapp className="text-2xl" />,
       title: "WhatsApp",
-      detail: "+91 97691 09898",
+      detail: "+91 97673 12345",
       description: "",
-      link: "https://wa.me/919769109898"
+      link: "https://wa.me/919767312345"
     },
     {
       icon: <FaPhone className="text-2xl" />,
       title: "Call Us",
-      detail: "+91 97691 09898",
+      detail: "+91 97673 12345",
       description: "",
-      link: "tel:+919769109898"
+      link: "tel:+919767312345"
     },
     {
       icon: <FaEnvelope className="text-2xl" />,
       title: "Email",
       detail: "hello@greenacres.com",
       description: "",
-      link: "mailto:hello@greenacres.com"
+      link: ""
     },
     {
       icon: <FaMapMarkerAlt className="text-2xl" />,
@@ -272,7 +272,7 @@ ${formData.message}
                   <h3 className="text-xl font-bold mb-3">Quick Connect</h3>
                   <p className="mb-4 text-green-100">Prefer instant communication?</p>
                   <a
-                    href="https://wa.me/919769109898"
+                    href="https://wa.me/919767312345"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-3 bg-white text-green-600 font-semibold py-3 px-6 rounded-lg hover:bg-green-50 transition-all duration-300"

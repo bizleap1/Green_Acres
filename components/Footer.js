@@ -47,7 +47,7 @@ export default function Footer() {
         <div>
           <h3 className="text-xl font-semibold mb-2 text-[#173319]">Contact Us</h3>
           <p className="text-gray-700 text-sm">Mumbai</p>
-          <p className="text-gray-700 text-sm">Phone: +91 97691 09898</p>
+          <p className="text-gray-700 text-sm">Phone: +91 97673 12345</p>
           <p className="text-gray-700 text-sm">Email: info@greenacres.com</p>
         </div>
       </div>
