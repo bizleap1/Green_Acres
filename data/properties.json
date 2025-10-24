@@ -20,7 +20,7 @@
     "type": "Apartment",
     "bhk": "3",
     "status": "For Sale",
-    "images": ["/images/Navgeeta1.jpg", "/images/N1.jpg", "/images/N2.jpg", "/images/N3.jpg", "/images/N4.jpg", "/images/N5.jpg", "/images/N6.jpg", "/images/N7.jpg"],
+    "images": ["/images/Navgeeta1.jpg", "/images/N1.jpg", "/images/N2.jpg", "/images/N3.jpg", "/images/N4.jpg", "/images/N5.jpg", "/images/N6.jpg", "/images/N7.jpg", "/images/N10.png", "/images/N11.png"],
     "description": "Luxury 3BHK apartment in a premium society with pool and clubhouse."
   },
   {
