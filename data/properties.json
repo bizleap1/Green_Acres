@@ -1,15 +1,15 @@
 [
   {
     "id": 1,
-    "name": "Green Acres Villa",
-    "sqft": "2500",
+    "name": "Aayush Gokul",
+    "sqft": "430 - 1085",
     "price": "₹1.5 Cr",
-    "location": "Pune, Maharashtra",
-    "type": "Villa",
-    "bhk": "3BHK",
+    "location": "Swastik Park, Chembur, Mumbai",
+    "type": "Apartment",
+    "bhk": "1,2,3,3.5",
     "status": "For Sale",
-    "images": ["/images/A1.png", "/images/A2.png", "/images/A3.png"],
-    "description": "A spacious villa with garden, parking and modern interiors."
+    "images": ["/images/Aayush1.webp", "/images/1.png", "/images/4.png","/images/5.png", "/images/6.png", "/images/7.png","/images/8.png"],
+    "description": "Spacious Apartments with garden, parking and modern interiors."
   },
   {
     "id": 2,
@@ -18,7 +18,7 @@
     "price": "₹80 Lakh",
     "location": "Nagpur, Maharashtra",
     "type": "Apartment",
-    "bhk": "2BHK",
+    "bhk": "2",
     "status": "For Sale",
     "images": ["/images/B1.png", "/images/property2b.jpg"],
     "description": "Luxury 2BHK apartment in a premium society with pool and clubhouse."
@@ -42,7 +42,7 @@
     "price": "₹1.5 Cr",
     "location": "Pune, Maharashtra",
     "type": "Villa",
-    "bhk": "3BHK",
+    "bhk": "3",
     "status": "For Sale",
     "images": ["/images/B1.png", "/images/property1b.jpg", "/images/property1c.jpg"],
     "description": "A spacious villa with garden, parking and modern interiors."
@@ -54,7 +54,7 @@
     "price": "₹80 Lakh",
     "location": "Nagpur, Maharashtra",
     "type": "Apartment",
-    "bhk": "2BHK",
+    "bhk": "2",
     "status": "For Sale",
     "images": ["/images/A1.png", "/images/property2b.jpg"],
     "description": "Luxury 2BHK apartment in a premium society with pool and clubhouse."

@@ -8,14 +8,45 @@ export default function PropertyView() {
   const router = useRouter();
   const { id } = router.query;
   const property = properties.find((p) => p.id === Number(id));
+
   const [selectedImage, setSelectedImage] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Popup state
+  const [showPopup, setShowPopup] = useState(false);
+  const [name, setName] = useState("");
+  const [mobile, setMobile] = useState("");
+
+  const nextImage = () => {
+    setSelectedImage((prev) =>
+      prev === property.images.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevImage = () => {
+    setSelectedImage((prev) =>
+      prev === 0 ? property.images.length - 1 : prev - 1
+    );
+  };
+
+  const handleSubmit = () => {
+    if (!name || !mobile) return alert("Please fill all fields!");
+    const message = `Hello! I want the price details for ${property?.name}. My name is ${name}, Mobile: ${mobile}`;
+    const whatsappURL = `https://wa.me/917097095152?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(whatsappURL, "_blank");
+    setShowPopup(false);
+    setName("");
+    setMobile("");
+  };
 
   if (!property) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">Property Not Found</h1>
-          <button 
+          <button
             onClick={() => router.back()}
             className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >
@@ -46,29 +77,99 @@ export default function PropertyView() {
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-2">{property.name}</h1>
             <p className="text-lg text-gray-600">{property.location}</p>
           </div>
-          <div className="text-right">
-            <div className="text-4xl font-bold text-green-600">{property.price}</div>
-            <div className="text-sm text-gray-600">Asking Price</div>
+          <div>
+            {/* Removed price */}
+            <button
+              onClick={() => setShowPopup(true)}
+              className="bg-[#173319] text-white py-2.5 px-6 rounded-lg font-semibold hover:bg-[#0a1a0c] transition"
+            >
+              View Price
+            </button>
           </div>
         </div>
 
         {/* Image Gallery */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-12">
-          <div className="lg:col-span-3 h-96 lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-            <img src={property.images[selectedImage]} alt={property.name} className="w-full h-full object-cover"/>
+        <div className="mb-12">
+          <div className="relative w-full h-80 lg:h-[500px] mb-4 bg-gray-900">
+            <img
+              src={property.images[selectedImage]}
+              alt={property.name}
+              className="w-full h-full object-contain cursor-pointer"
+              onClick={() => setIsFullscreen(true)}
+            />
+            {property.images.length > 1 && (
+              <>
+                <button
+                  onClick={prevImage}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white w-10 h-10 rounded-full hover:bg-opacity-70 transition-colors"
+                >
+                  ‹
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white w-10 h-10 rounded-full hover:bg-opacity-70 transition-colors"
+                >
+                  ›
+                </button>
+              </>
+            )}
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
+
+          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
             {property.images.map((img, idx) => (
               <button
                 key={idx}
                 onClick={() => setSelectedImage(idx)}
-                className={`relative h-24 rounded-xl overflow-hidden shadow-lg transition-all duration-300 ${selectedImage === idx ? 'ring-4 ring-green-500 scale-105' : 'hover:scale-105'}`}
+                className={`aspect-square overflow-hidden border-2 transition-all ${
+                  selectedImage === idx
+                    ? "border-green-500 scale-105"
+                    : "border-gray-300 hover:scale-105"
+                }`}
               >
-                <img src={img} alt={`${property.name} view ${idx + 1}`} className="w-full h-full object-cover"/>
+                <img
+                  src={img}
+                  alt={`${property.name} view ${idx + 1}`}
+                  className="w-full h-full object-cover"
+                />
               </button>
             ))}
           </div>
         </div>
+
+        {/* Fullscreen Modal */}
+        {isFullscreen && (
+          <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+            <div className="relative w-full h-full flex items-center justify-center">
+              <img
+                src={property.images[selectedImage]}
+                alt={property.name}
+                className="max-w-full max-h-full object-contain"
+              />
+              <button
+                className="absolute top-4 right-4 text-white text-2xl bg-black bg-opacity-50 w-10 h-10 rounded-full hover:bg-opacity-70 transition-colors"
+                onClick={() => setIsFullscreen(false)}
+              >
+                ✕
+              </button>
+              {property.images.length > 1 && (
+                <>
+                  <button
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-2xl bg-black bg-opacity-50 w-10 h-10 rounded-full hover:bg-opacity-70 transition-colors"
+                    onClick={prevImage}
+                  >
+                    ‹
+                  </button>
+                  <button
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-2xl bg-black bg-opacity-50 w-10 h-10 rounded-full hover:bg-opacity-70 transition-colors"
+                    onClick={nextImage}
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Property Details */}
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
@@ -95,6 +196,55 @@ export default function PropertyView() {
           </div>
         </div>
       </main>
+
+      {/* WHATSAPP POPUP */}
+      {showPopup && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-[999] px-4"
+          onClick={() => setShowPopup(false)}
+        >
+          <div
+            className="bg-white p-8 rounded-2xl w-full max-w-md relative shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="absolute top-3 right-3 text-gray-600 hover:text-black text-xl font-bold"
+              onClick={() => setShowPopup(false)}
+            >
+              ✕
+            </button>
+
+            <h2 className="text-center font-bold text-2xl mb-4 text-[#173319]">
+              Get Price Details
+            </h2>
+
+            <p className="text-center text-sm mb-4 text-gray-600">{property.name}</p>
+
+            <input
+              type="text"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full border border-gray-300 px-3 py-2 rounded-lg mb-3"
+            />
+
+            <input
+              type="number"
+              placeholder="Enter your phone number"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+              className="w-full border border-gray-300 px-3 py-2 rounded-lg mb-5"
+            />
+
+            <button
+              onClick={handleSubmit}
+              className="w-full bg-[#173319] text-white py-3 rounded-lg font-semibold hover:bg-[#0a1a0c] transition"
+            >
+              Send on WhatsApp ✅
+            </button>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

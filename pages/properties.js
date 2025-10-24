@@ -9,9 +9,13 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
+
 export default function Properties() {
   const [filter, setFilter] = useState("all");
   const [hoveredProperty, setHoveredProperty] = useState(null);
+  const [selectedProperty, setSelectedProperty] = useState(null);
+const [showPricePopup, setShowPricePopup] = useState(false);
+
 
   const { ref: propertiesRef, inView: propertiesInView } = useInView({
     triggerOnce: true,
@@ -264,163 +268,96 @@ export default function Properties() {
 
         {/* Properties Grid */}
         <section ref={propertiesRef} className="py-20 bg-gradient-to-b from-gray-50 to-white">
-          <div className="container mx-auto px-6">
-            {filteredProperties.length > 0 ? (
-              <motion.div
-                initial="initial"
-                animate={propertiesInView ? "animate" : "initial"}
-                variants={staggerChildren}
-                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
-              >
-                {filteredProperties.map((property, index) => (
-                  <motion.div
-                    key={property.id}
-                    variants={fadeInUp}
-                    initial="initial"
-                    animate={propertiesInView ? "animate" : "initial"}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                    onHoverStart={() => setHoveredProperty(property.id)}
-                    onHoverEnd={() => setHoveredProperty(null)}
-                    className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden relative"
+  <div className="container mx-auto px-6">
+    {filteredProperties.length > 0 ? (
+      <motion.div
+        initial="initial"
+        animate={propertiesInView ? "animate" : "initial"}
+        variants={staggerChildren}
+        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+      >
+        {filteredProperties.map((property, index) => (
+          <motion.div
+            key={property.id}
+            variants={fadeInUp}
+            initial="initial"
+            animate={propertiesInView ? "animate" : "initial"}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden relative"
+          >
+            {/* Property Image */}
+            <div className="relative h-64 overflow-hidden">
+              <img
+                src={property.images[0]}
+                alt={property.name}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <span className="absolute top-3 left-3 px-3 py-1 text-xs rounded-full text-white font-semibold"
+                style={{ backgroundColor: "#173319" }}>
+                {property.status || "Available"}
+              </span>
+            </div>
+
+            {/* Property Details */}
+            <div className="p-5 space-y-3">
+              <h3 className="text-lg font-bold text-gray-900 truncate">{property.name}</h3>
+              <p className="text-sm font-medium text-gray-500 flex items-center gap-1">
+                📍 {property.location}
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                {property.bhk?.split(",").map((unit, idx) => (
+                  <span
+                    key={idx}
+                    className="px-2 py-1 bg-[#fffbe5] text-[#173319] border border-[#D4A89C] rounded-md text-[12px] font-medium"
                   >
-                    {/* Property Image with Overlay */}
-                    <div className="relative overflow-hidden h-64">
-                      <motion.img
-                        src={property.images[0]}
-                        alt={property.name}
-                        className="w-full h-full object-cover"
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.6 }}
-                      />
-                      
-                      {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      
-                      {/* Status Badge */}
-                      <div className="absolute top-4 right-4">
-                        <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
-                          {property.status || "Available"}
-                        </span>
-                      </div>
-
-                      {/* Quick Info Overlay */}
-                      <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                        <div className="flex justify-between text-white">
-                          <div className="flex items-center space-x-4">
-                            <div className="flex items-center">
-                              <span className="text-sm font-semibold">{property.bedrooms || 3}</span>
-                              <span className="text-xs ml-1">BEDS</span>
-                            </div>
-                            <div className="flex items-center">
-                              <span className="text-sm font-semibold">{property.bathrooms || 2}</span>
-                              <span className="text-xs ml-1">BATHS</span>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-lg font-bold">{property.price}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Property Details */}
-                    <div className="p-6">
-                      <div className="mb-3">
-                        <h3 className="text-xl font-bold text-gray-800 group-hover:text-green-600 transition-colors duration-300 line-clamp-1">
-                          {property.name}
-                        </h3>
-                        <div className="flex items-center text-gray-600 mt-2">
-                          <svg
-                            className="w-4 h-4 mr-2 flex-shrink-0"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          <span className="text-sm line-clamp-1">{property.location}</span>
-                        </div>
-                      </div>
-
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                        {property.description || "Beautiful property with modern amenities and prime location."}
-                      </p>
-
-                      <div className="grid grid-cols-3 gap-4 py-4 border-y border-gray-200 mb-4">
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-gray-800">
-                            {property.sqft ? property.sqft.toLocaleString() : "2,500"}
-                          </div>
-                          <div className="text-xs text-gray-600 uppercase tracking-wide">SQ FT</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-gray-800">
-                            {property.bedrooms || 3}
-                          </div>
-                          <div className="text-xs text-gray-600 uppercase tracking-wide">BEDS</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-gray-800">
-                            {property.bathrooms || 2}
-                          </div>
-                          <div className="text-xs text-gray-600 uppercase tracking-wide">BATHS</div>
-                        </div>
-                      </div>
-
-                      <Link
-                        href={`/propertyview?id=${property.id}`}
-                        className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transform hover:scale-105 transition-all duration-300 flex items-center justify-center group/btn shadow-lg hover:shadow-xl"
-                      >
-                        View Full Details
-                        <svg
-                          className="w-5 h-5 ml-2 transform group-hover/btn:translate-x-1 transition-transform"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M14 5l7 7m0 0l-7 7m7-7H3"
-                          />
-                        </svg>
-                      </Link>
-                    </div>
-
-                    {/* Hover Effect Border */}
-                    <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-green-600/20 transition-all duration-300 pointer-events-none" />
-                  </motion.div>
+                    {unit.trim()} BHK
+                  </span>
                 ))}
-              </motion.div>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-center py-16"
+              </div>
+
+              <p className="text-base font-semibold text-[#173319]">📐 {property.sqft?.toLocaleString()} sqft</p>
+
+              {/* CTA Buttons */}
+              <button
+  onClick={() => {
+    setSelectedProperty(property);
+    setShowPricePopup(true);
+  }}
+  className="w-full bg-[#173319] text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-[#0a1a0c] transition"
+>
+  View Price
+</button>
+
+
+              <Link
+                href={`/propertyview?id=${property.id}`}
+                className="block bg-white border border-[#173319] text-[#173319] py-2.5 rounded-lg text-center font-semibold hover:bg-[#173319] hover:text-white transition"
               >
-                <div className="text-6xl mb-4">🏡</div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">No Properties Found</h3>
-                <p className="text-gray-600 max-w-md mx-auto mb-6">
-                  We couldn't find any properties matching your current filter. Try adjusting your criteria or browse all properties.
-                </p>
-                <motion.button
-                  onClick={() => setFilter("all")}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors duration-300"
-                >
-                  View All Properties
-                </motion.button>
-              </motion.div>
-            )}
-          </div>
-        </section>
+                View Details
+              </Link>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+    ) : (
+      <div className="text-center py-16">
+        <div className="text-6xl mb-4">🏡</div>
+        <h3 className="text-2xl font-bold text-gray-800 mb-4">No Properties Found</h3>
+        <p className="text-gray-600 max-w-md mx-auto mb-6">
+          We couldn't find any properties matching your current filter.
+        </p>
+        <button
+          onClick={() => setFilter("all")}
+          className="bg-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors duration-300"
+        >
+          View All Properties
+        </button>
+      </div>
+    )}
+  </div>
+  
+</section>
 
         
       </main>
