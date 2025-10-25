@@ -9,13 +9,13 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-
 export default function Properties() {
   const [filter, setFilter] = useState("all");
   const [hoveredProperty, setHoveredProperty] = useState(null);
   const [selectedProperty, setSelectedProperty] = useState(null);
-const [showPricePopup, setShowPricePopup] = useState(false);
-
+  const [showPricePopup, setShowPricePopup] = useState(false);
+  const [name, setName] = useState("");
+  const [mobile, setMobile] = useState("");
 
   const { ref: propertiesRef, inView: propertiesInView } = useInView({
     triggerOnce: true,
@@ -39,6 +39,21 @@ const [showPricePopup, setShowPricePopup] = useState(false);
         staggerChildren: 0.15,
       },
     },
+  };
+
+  const handleSubmit = () => {
+    if (!name || !mobile) return alert("Please fill all fields!");
+
+    const message = `Hello! I want the price details for ${selectedProperty?.name}. My name is ${name}, Mobile: ${mobile}`;
+    const whatsappURL = `https://wa.me/919833398980?text=${encodeURIComponent(
+      message
+    )}`;
+
+    window.open(whatsappURL, "_blank");
+    setSelectedProperty(null);
+    setShowPricePopup(false);
+    setName("");
+    setMobile("");
   };
 
   const filterButtons = [
@@ -268,99 +283,143 @@ const [showPricePopup, setShowPricePopup] = useState(false);
 
         {/* Properties Grid */}
         <section ref={propertiesRef} className="py-20 bg-gradient-to-b from-gray-50 to-white">
-  <div className="container mx-auto px-6">
-    {filteredProperties.length > 0 ? (
-      <motion.div
-        initial="initial"
-        animate={propertiesInView ? "animate" : "initial"}
-        variants={staggerChildren}
-        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
-      >
-        {filteredProperties.map((property, index) => (
-          <motion.div
-            key={property.id}
-            variants={fadeInUp}
-            initial="initial"
-            animate={propertiesInView ? "animate" : "initial"}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden relative"
-          >
-            {/* Property Image */}
-            <div className="relative h-64 overflow-hidden">
-              <img
-                src={property.images[0]}
-                alt={property.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <span className="absolute top-3 left-3 px-3 py-1 text-xs rounded-full text-white font-semibold"
-                style={{ backgroundColor: "#173319" }}>
-                {property.status || "Available"}
-              </span>
-            </div>
-
-            {/* Property Details */}
-            <div className="p-5 space-y-3">
-              <h3 className="text-lg font-bold text-gray-900 truncate">{property.name}</h3>
-              <p className="text-sm font-medium text-gray-500 flex items-center gap-1">
-                📍 {property.location}
-              </p>
-
-              <div className="flex flex-wrap gap-2">
-                {property.bhk?.split(",").map((unit, idx) => (
-                  <span
-                    key={idx}
-                    className="px-2 py-1 bg-[#fffbe5] text-[#173319] border border-[#D4A89C] rounded-md text-[12px] font-medium"
-                  >
-                    {unit.trim()} BHK
-                  </span>
-                ))}
-              </div>
-
-              <p className="text-base font-semibold text-[#173319]">📐 {property.sqft?.toLocaleString()} sqft</p>
-
-              {/* CTA Buttons */}
-              <button
-  onClick={() => {
-    setSelectedProperty(property);
-    setShowPricePopup(true);
-  }}
-  className="w-full bg-[#173319] text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-[#0a1a0c] transition"
->
-  View Price
-</button>
-
-
-              <Link
-                href={`/propertyview?id=${property.id}`}
-                className="block bg-white border border-[#173319] text-[#173319] py-2.5 rounded-lg text-center font-semibold hover:bg-[#173319] hover:text-white transition"
+          <div className="container mx-auto px-6">
+            {filteredProperties.length > 0 ? (
+              <motion.div
+                initial="initial"
+                animate={propertiesInView ? "animate" : "initial"}
+                variants={staggerChildren}
+                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
               >
-                View Details
-              </Link>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
-    ) : (
-      <div className="text-center py-16">
-        <div className="text-6xl mb-4">🏡</div>
-        <h3 className="text-2xl font-bold text-gray-800 mb-4">No Properties Found</h3>
-        <p className="text-gray-600 max-w-md mx-auto mb-6">
-          We couldn't find any properties matching your current filter.
-        </p>
-        <button
-          onClick={() => setFilter("all")}
-          className="bg-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors duration-300"
-        >
-          View All Properties
-        </button>
-      </div>
-    )}
-  </div>
-  
-</section>
+                {filteredProperties.map((property, index) => (
+                  <motion.div
+                    key={property.id}
+                    variants={fadeInUp}
+                    initial="initial"
+                    animate={propertiesInView ? "animate" : "initial"}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden relative"
+                  >
+                    {/* Property Image */}
+                    <div className="relative h-64 overflow-hidden">
+                      <img
+                        src={property.images[0]}
+                        alt={property.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <span className="absolute top-3 left-3 px-3 py-1 text-xs rounded-full text-white font-semibold"
+                        style={{ backgroundColor: "#173319" }}>
+                        {property.status || "Available"}
+                      </span>
+                    </div>
 
-        
+                    {/* Property Details */}
+                    <div className="p-5 space-y-3">
+                      <h3 className="text-lg font-bold text-gray-900 truncate">{property.name}</h3>
+                      <p className="text-sm font-medium text-gray-500 flex items-center gap-1">
+                        📍 {property.location}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {property.bhk?.split(",").map((unit, idx) => (
+                          <span
+                            key={idx}
+                            className="px-2 py-1 bg-[#fffbe5] text-[#173319] border border-[#D4A89C] rounded-md text-[12px] font-medium"
+                          >
+                            {unit.trim()} BHK
+                          </span>
+                        ))}
+                      </div>
+
+                      <p className="text-base font-semibold text-[#173319]">📐 {property.sqft?.toLocaleString()} sqft</p>
+
+                      {/* CTA Buttons */}
+                      <button
+                        onClick={() => {
+                          setSelectedProperty(property);
+                          setShowPricePopup(true);
+                        }}
+                        className="w-full bg-[#173319] text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-[#0a1a0c] transition"
+                      >
+                        View Price
+                      </button>
+
+                      <Link
+                        href={`/propertyview?id=${property.id}`}
+                        className="block bg-white border border-[#173319] text-[#173319] py-2.5 rounded-lg text-center font-semibold hover:bg-[#173319] hover:text-white transition"
+                      >
+                        View Details
+                      </Link>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            ) : (
+              <div className="text-center py-16">
+                <div className="text-6xl mb-4">🏡</div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">No Properties Found</h3>
+                <p className="text-gray-600 max-w-md mx-auto mb-6">
+                  We couldn't find any properties matching your current filter.
+                </p>
+                <button
+                  onClick={() => setFilter("all")}
+                  className="bg-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors duration-300"
+                >
+                  View All Properties
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
       </main>
+
+      {/* POPUP FORM */}
+      {showPricePopup && selectedProperty && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-[999] px-4">
+          <div className="bg-white p-8 rounded-2xl w-full max-w-md relative shadow-xl">
+            <button
+              className="absolute top-3 right-3 text-gray-600 hover:text-black"
+              onClick={() => {
+                setSelectedProperty(null);
+                setShowPricePopup(false);
+              }}
+            >
+              ✕
+            </button>
+
+            <h2 className="text-center font-bold text-xl mb-6 text-[#173319]">
+              Get Price Details
+            </h2>
+
+            <p className="text-center text-sm mb-4 text-gray-600">
+              {selectedProperty.name}
+            </p>
+
+            <input
+              type="text"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full border border-gray-300 px-3 py-2 rounded-lg mb-3"
+            />
+
+            <input
+              type="number"
+              placeholder="Enter your phone number"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+              className="w-full border border-gray-300 px-3 py-2 rounded-lg mb-5"
+            />
+
+            <button
+              onClick={handleSubmit}
+              className="w-full bg-[#173319] text-white py-3 rounded-lg font-semibold hover:bg-[#0a1a0c] transition"
+            >
+              Send on WhatsApp ✅
+            </button>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>
