@@ -24,7 +24,7 @@ export default function Contact() {
   const sendToWhatsApp = (e) => {
     e.preventDefault();
     
-    const phoneNumber = '919767312345';
+    const phoneNumber = '919833398980';
     const message = `*New Contact Request from Green Acres Realty Website*
 
 *Name:* ${formData.name}
@@ -47,7 +47,7 @@ ${formData.message}
     {
       icon: <FaWhatsapp className="text-2xl" />,
       title: "WhatsApp",
-      detail: "+91 97673 12345",
+      detail: "+91 98333 98980",
       description: "",
       link: "https://wa.me/919833398980"
     },
