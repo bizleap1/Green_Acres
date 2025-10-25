@@ -9,10 +9,23 @@ export default function App({ Component, pageProps }) {
         <title>Green Acres Realty</title>
 
         {/* Favicon */}
-        <link rel="icon" href="/logo.svg" />
-        {/* Or PNG version */}
-        {/* <link rel="icon" type="image/png" href="/favicon.png" /> */}
+        <link rel="icon" type="image/png" href="/logo.png" />
+
+        {/* ✅ Google Search Organization Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Green Acres Realty",
+              "url": "https://greenacresrealty.co.in",
+              "logo": "https://greenacresrealty.co.in/logo.png",
+            }),
+          }}
+        />
       </Head>
+
       <Component {...pageProps} />
     </>
   );
